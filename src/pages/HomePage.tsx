@@ -57,11 +57,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenAdmissionM
             loop
             muted={isMuted}
             playsInline
-            className="w-full h-full object-cover opacity-35 pointer-events-none"
+            className="w-full h-full object-cover opacity-60 pointer-events-none"
           >
             <source src="https://4ugxh6pswuv9wwm4.public.blob.vercel-storage.com/Create_video_for_School207_202608060031.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-950/70 via-slate-900/85 to-slate-950" />
+          <div className="absolute inset-0 bg-gradient-to-b from-blue-950/50 via-slate-900/65 to-slate-950/90" />
         </div>
 
         {/* Audio Mute/Unmute Floating Controller Button */}

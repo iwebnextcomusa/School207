@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { NavPage } from '../types';
 import { SCHOOL_INFO, HIGHLIGHTS, TESTIMONIALS, NEWS_ITEMS } from '../data/mockData';
 import { CampusCanvas3D } from '../components/3D/CampusCanvas3D';
@@ -16,7 +16,9 @@ import {
   Sparkles,
   Phone,
   Mail,
-  FileText
+  FileText,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 
 interface HomePageProps {
@@ -25,6 +27,16 @@ interface HomePageProps {
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenAdmissionModal }) => {
+  const [isMuted, setIsMuted] = useState<boolean>(true);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
   const highlightIcons: Record<string, React.ReactNode> = {
     teachers: <GraduationCap className="w-7 h-7 text-blue-600 dark:text-blue-400" />,
     classrooms: <MonitorPlay className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />,
@@ -37,15 +49,39 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenAdmissionM
       
       {/* HERO SECTION */}
       <section className="relative overflow-hidden bg-gradient-to-b from-blue-950 via-slate-900 to-slate-950 text-white pt-16 pb-24 border-b border-slate-800">
-        {/* Hero Background Image & Overlays */}
+        {/* Hero Background Video & Overlays */}
         <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=1600"
-            alt="School207 Campus Background"
-            className="w-full h-full object-cover opacity-25"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-950/80 via-slate-900/90 to-slate-950" />
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted={isMuted}
+            playsInline
+            className="w-full h-full object-cover opacity-35 pointer-events-none"
+          >
+            <source src="https://4ugxh6pswuv9wwm4.public.blob.vercel-storage.com/Create_video_for_School207_202608060031.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-blue-950/70 via-slate-900/85 to-slate-950" />
         </div>
+
+        {/* Audio Mute/Unmute Floating Controller Button */}
+        <button
+          onClick={toggleMute}
+          aria-label={isMuted ? "Unmute background video" : "Mute background video"}
+          className="absolute bottom-6 right-6 z-20 px-3.5 py-2 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700/80 text-white hover:bg-slate-800 transition-all flex items-center gap-2 shadow-xl hover:scale-105 group text-xs font-semibold"
+        >
+          {isMuted ? (
+            <>
+              <VolumeX className="w-4 h-4 text-slate-400 group-hover:text-amber-400 transition-colors" />
+              <span>Unmute Video</span>
+            </>
+          ) : (
+            <>
+              <Volume2 className="w-4 h-4 text-emerald-400 animate-pulse" />
+              <span className="text-emerald-300">Sound Playing</span>
+            </>
+          )}
+        </button>
 
         {/* Background Decorative Blur circles */}
         <div className="absolute top-1/4 left-10 w-96 h-96 bg-blue-600/20 rounded-full filter blur-3xl pointer-events-none z-0" />

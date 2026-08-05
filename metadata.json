@@ -1,0 +1,6 @@
+{
+  "name": "School207 - Government School",
+  "description": "Official website for Government School207 featuring admissions, academics, faculty directory, interactive 3D campus preview, and AI assistant.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
